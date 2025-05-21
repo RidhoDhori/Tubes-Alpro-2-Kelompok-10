@@ -557,6 +557,8 @@ func main() {
 			} else if subpilih == 3 {
 				tampilkanDataKelas(&kelas, nKelas)
 			}
+		default:
+			fmt.Println("Pilihan menu tidak valid!")
 		}
 		fmt.Println()
 	}
