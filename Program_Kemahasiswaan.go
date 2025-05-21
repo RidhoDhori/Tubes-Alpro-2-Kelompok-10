@@ -173,34 +173,174 @@ func binarySearchKelas(data *Kelas, n int, target string) int {
 }
 
 // --- Fungsi Input Data ---
+
 func inputDataMahasiswa(data *Mahasiswa, n *int) {
     fmt.Print("Masukkan jumlah mahasiswa: ")
-    fmt.Scan(n)
+    for {
+        if _, err := fmt.Scan(n); err != nil || *n <= 0 || *n > 100 {
+            fmt.Println("Input jumlah mahasiswa harus berupa angka 1-100!")
+            fmt.Print("Masukkan jumlah mahasiswa: ")
+            var dummy string
+            fmt.Scanln(&dummy)
+            continue
+        }
+        break
+    }
     for i := 0; i < *n; i++ {
-        fmt.Printf("Nama mahasiswa ke-%d: ", i+1)
-        fmt.Scan(&data[i].Nama)
-        fmt.Printf("NIM mahasiswa ke-%d: ", i+1)
-        fmt.Scan(&data[i].NIM)
+        // Validasi Nama: tidak boleh kosong & tidak boleh angka
+        for {
+            fmt.Printf("Nama mahasiswa ke-%d: ", i+1)
+            if _, err := fmt.Scan(&data[i].Nama); err != nil || data[i].Nama == "" {
+                fmt.Println("Nama tidak boleh kosong!")
+                var dummy string
+                fmt.Scanln(&dummy)
+                continue
+            }
+            // Cek apakah nama hanya angka
+            isAngka := true
+            for _, c := range data[i].Nama {
+                if c < '0' || c > '9' {
+                    isAngka = false
+                    break
+                }
+            }
+            if isAngka {
+                fmt.Println("Nama tidak boleh berupa angka!")
+                continue
+            }
+            break
+        }
+        // Validasi NIM: tidak boleh kosong & harus angka
+        for {
+            fmt.Printf("NIM mahasiswa ke-%d: ", i+1)
+            if _, err := fmt.Scan(&data[i].NIM); err != nil || data[i].NIM == "" {
+                fmt.Println("NIM tidak boleh kosong!")
+                var dummy string
+                fmt.Scanln(&dummy)
+                continue
+            }
+            // Cek apakah NIM hanya angka
+            isAngka := true
+            for _, c := range data[i].NIM {
+                if c < '0' || c > '9' {
+                    isAngka = false
+                    break
+                }
+            }
+            if !isAngka {
+                fmt.Println("NIM harus berupa angka!")
+                continue
+            }
+            break
+        }
     }
 }
 func inputDataDosen(data *Dosen, n *int) {
     fmt.Print("Masukkan jumlah dosen: ")
-    fmt.Scan(n)
+    for {
+        if _, err := fmt.Scan(n); err != nil || *n <= 0 || *n > 100 {
+            fmt.Println("Input jumlah dosen harus berupa angka 1-100!")
+            fmt.Print("Masukkan jumlah dosen: ")
+            var dummy string
+            fmt.Scanln(&dummy)
+            continue
+        }
+        break
+    }
     for i := 0; i < *n; i++ {
-        fmt.Printf("Nama dosen ke-%d: ", i+1)
-        fmt.Scan(&data[i].Nama)
-        fmt.Printf("NIDN dosen ke-%d: ", i+1)
-        fmt.Scan(&data[i].NIDN)
+        // Validasi Nama: tidak boleh kosong & tidak boleh angka
+        for {
+            fmt.Printf("Nama dosen ke-%d: ", i+1)
+            if _, err := fmt.Scan(&data[i].Nama); err != nil || data[i].Nama == "" {
+                fmt.Println("Nama tidak boleh kosong!")
+                var dummy string
+                fmt.Scanln(&dummy)
+                continue
+            }
+            isAngka := true
+            for _, c := range data[i].Nama {
+                if c < '0' || c > '9' {
+                    isAngka = false
+                    break
+                }
+            }
+            if isAngka {
+                fmt.Println("Nama tidak boleh berupa angka!")
+                continue
+            }
+            break
+        }
+        // Validasi NIDN: tidak boleh kosong & harus angka
+        for {
+            fmt.Printf("NIDN dosen ke-%d: ", i+1)
+            if _, err := fmt.Scan(&data[i].NIDN); err != nil || data[i].NIDN == "" {
+                fmt.Println("NIDN tidak boleh kosong!")
+                var dummy string
+                fmt.Scanln(&dummy)
+                continue
+            }
+            isAngka := true
+            for _, c := range data[i].NIDN {
+                if c < '0' || c > '9' {
+                    isAngka = false
+                    break
+                }
+            }
+            if !isAngka {
+                fmt.Println("NIDN harus berupa angka!")
+                continue
+            }
+            break
+        }
     }
 }
+
 func inputDataKelas(data *Kelas, n *int) {
     fmt.Print("Masukkan jumlah kelas: ")
-    fmt.Scan(n)
+    for {
+        if _, err := fmt.Scan(n); err != nil || *n <= 0 || *n > 100 {
+            fmt.Println("Input jumlah kelas harus berupa angka 1-100!")
+            fmt.Print("Masukkan jumlah kelas: ")
+            var dummy string
+            fmt.Scanln(&dummy)
+            continue
+        }
+        break
+    }
     for i := 0; i < *n; i++ {
-        fmt.Printf("Nama kelas ke-%d: ", i+1)
-        fmt.Scan(&data[i].NamaKelas)
-        fmt.Printf("Ruangan kelas ke-%d: ", i+1)
-        fmt.Scan(&data[i].Ruangan)
+        // Validasi NamaKelas: tidak boleh kosong & tidak boleh angka
+        for {
+            fmt.Printf("Nama kelas ke-%d: ", i+1)
+            if _, err := fmt.Scan(&data[i].NamaKelas); err != nil || data[i].NamaKelas == "" {
+                fmt.Println("Nama kelas tidak boleh kosong!")
+                var dummy string
+                fmt.Scanln(&dummy)
+                continue
+            }
+            isAngka := true
+            for _, c := range data[i].NamaKelas {
+                if c < '0' || c > '9' {
+                    isAngka = false
+                    break
+                }
+            }
+            if isAngka {
+                fmt.Println("Nama kelas tidak boleh berupa angka!")
+                continue
+            }
+            break
+        }
+        // Validasi Ruangan: tidak boleh kosong
+        for {
+            fmt.Printf("Ruangan kelas ke-%d: ", i+1)
+            if _, err := fmt.Scan(&data[i].Ruangan); err != nil || data[i].Ruangan == "" {
+                fmt.Println("Ruangan tidak boleh kosong!")
+                var dummy string
+                fmt.Scanln(&dummy)
+                continue
+            }
+            break
+        }
     }
 }
 
