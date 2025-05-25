@@ -512,7 +512,13 @@ func main() {
 		fmt.Println("6. Tampilkan Data")
 		fmt.Println("0. Keluar")
 		fmt.Print("Pilih menu: ")
-		fmt.Scan(&pilih)
+		if _, err := fmt.Scan(&pilih); err != nil {
+            fmt.Println("Input harus berupa angka!")
+            var dummy string
+            fmt.Scanln(&dummy) // bersihkan buffer
+            fmt.Println()
+            continue
+        }
 		if pilih == 0 {
 			break
 		}
@@ -526,7 +532,13 @@ func main() {
 		case 4:
 			fmt.Println("Sort untuk: 1. Mahasiswa 2. Dosen 3. Kelas")
 			fmt.Print("Pilih: ")
-			fmt.Scan(&subpilih)
+			if _, err := fmt.Scan(&subpilih); err != nil {
+                fmt.Println("Input harus berupa angka!")
+                var dummy string
+                fmt.Scanln(&dummy)
+                fmt.Println()
+                continue
+            }
 			if subpilih == 1 {
 				menuSortMahasiswa(&mahasiswa, nMahasiswa)
 			} else if subpilih == 2 {
@@ -537,7 +549,13 @@ func main() {
 		case 5:
 			fmt.Println("Search untuk: 1. Mahasiswa 2. Dosen 3. Kelas")
 			fmt.Print("Pilih: ")
-			fmt.Scan(&subpilih)
+			if _, err := fmt.Scan(&subpilih); err != nil {
+                fmt.Println("Input harus berupa angka!")
+                var dummy string
+                fmt.Scanln(&dummy)
+                fmt.Println()
+                continue
+            }
 			if subpilih == 1 {
 				menuSearchMahasiswa(&mahasiswa, nMahasiswa)
 			} else if subpilih == 2 {
@@ -549,7 +567,13 @@ func main() {
 		case 6:
 			fmt.Println("Tampilkan data: 1. Mahasiswa 2. Dosen 3. Kelas")
 			fmt.Print("Pilih: ")
-			fmt.Scan(&subpilih)
+			if _, err := fmt.Scan(&subpilih); err != nil {
+                fmt.Println("Input harus berupa angka!")
+                var dummy string
+                fmt.Scanln(&dummy)
+                fmt.Println()
+                continue
+            }
 			if subpilih == 1 {
 				tampilkanDataMahasiswa(&mahasiswa, nMahasiswa)
 			} else if subpilih == 2 {
