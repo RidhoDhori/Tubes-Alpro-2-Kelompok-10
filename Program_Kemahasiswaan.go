@@ -175,19 +175,19 @@ func binarySearchKelas(data *Kelas, n int, target string) int {
 // --- Fungsi Input Data ---
 
 func inputDataMahasiswa(data *Mahasiswa, n *int) {
-	fmt.Print("Masukkan jumlah mahasiswa: ")
+	var tambah int
+	fmt.Print("Masukkan jumlah mahasiswa yang ingin ditambahkan: ")
 	for {
-		if _, err := fmt.Scan(n); err != nil || *n <= 0 || *n > 100 {
-			fmt.Println("Input jumlah mahasiswa harus berupa angka 1-100!")
-			fmt.Print("Masukkan jumlah mahasiswa: ")
+		if _, err := fmt.Scan(&tambah); err != nil || tambah <= 0 || *n+tambah > 100 {
+			fmt.Println("Input jumlah mahasiswa harus berupa angka dan total tidak lebih dari 100!")
+			fmt.Print("Masukkan jumlah mahasiswa yang ingin ditambahkan: ")
 			var dummy string
 			fmt.Scanln(&dummy)
 			continue
 		}
 		break
 	}
-	for i := 0; i < *n; i++ {
-		// Validasi Nama: tidak boleh kosong & tidak boleh angka
+	for i := *n; i < *n+tambah; i++ {
 		for {
 			fmt.Printf("Nama mahasiswa ke-%d: ", i+1)
 			if _, err := fmt.Scan(&data[i].Nama); err != nil || data[i].Nama == "" {
@@ -196,7 +196,6 @@ func inputDataMahasiswa(data *Mahasiswa, n *int) {
 				fmt.Scanln(&dummy)
 				continue
 			}
-			// Cek apakah nama hanya angka
 			isAngka := true
 			for _, c := range data[i].Nama {
 				if c < '0' || c > '9' {
@@ -210,7 +209,6 @@ func inputDataMahasiswa(data *Mahasiswa, n *int) {
 			}
 			break
 		}
-		// Validasi NIM: tidak boleh kosong & harus angka
 		for {
 			fmt.Printf("NIM mahasiswa ke-%d: ", i+1)
 			if _, err := fmt.Scan(&data[i].NIM); err != nil || data[i].NIM == "" {
@@ -219,7 +217,6 @@ func inputDataMahasiswa(data *Mahasiswa, n *int) {
 				fmt.Scanln(&dummy)
 				continue
 			}
-			// Cek apakah NIM hanya angka
 			isAngka := true
 			for _, c := range data[i].NIM {
 				if c < '0' || c > '9' {
@@ -234,31 +231,35 @@ func inputDataMahasiswa(data *Mahasiswa, n *int) {
 			break
 		}
 	}
+	*n += tambah // tambah jumlah mahasiswa
 }
+
 func inputDataDosen(data *Dosen, n *int) {
-	fmt.Print("Masukkan jumlah dosen: ")
+	var tambah int
+	fmt.Print("Masukkan jumlah dosen yang ingin ditambah: ")
 	for {
-		if _, err := fmt.Scan(n); err != nil || *n <= 0 || *n > 100 {
-			fmt.Println("Input jumlah dosen harus berupa angka 1-100!")
-			fmt.Print("Masukkan jumlah dosen: ")
+		if _, err := fmt.Scan(&tambah); err != nil || tambah <= 0 || *n+tambah > 100 {
+			fmt.Println("Input jumlah dosen harus berupa angka dan total tidak boleh lebih dari 100!")
+			fmt.Print("Masukkan jumlah dosen yang ingin ditambah: ")
 			var dummy string
 			fmt.Scanln(&dummy)
 			continue
 		}
 		break
 	}
-	for i := 0; i < *n; i++ {
+	for i := 0; i < tambah; i++ {
+		idx := *n + i
 		// Validasi Nama: tidak boleh kosong & tidak boleh angka
 		for {
-			fmt.Printf("Nama dosen ke-%d: ", i+1)
-			if _, err := fmt.Scan(&data[i].Nama); err != nil || data[i].Nama == "" {
+			fmt.Printf("Nama dosen ke-%d: ", idx+1)
+			if _, err := fmt.Scan(&data[idx].Nama); err != nil || data[idx].Nama == "" {
 				fmt.Println("Nama tidak boleh kosong!")
 				var dummy string
 				fmt.Scanln(&dummy)
 				continue
 			}
 			isAngka := true
-			for _, c := range data[i].Nama {
+			for _, c := range data[idx].Nama {
 				if c < '0' || c > '9' {
 					isAngka = false
 					break
@@ -272,15 +273,15 @@ func inputDataDosen(data *Dosen, n *int) {
 		}
 		// Validasi NIDN: tidak boleh kosong & harus angka
 		for {
-			fmt.Printf("NIDN dosen ke-%d: ", i+1)
-			if _, err := fmt.Scan(&data[i].NIDN); err != nil || data[i].NIDN == "" {
+			fmt.Printf("NIDN dosen ke-%d: ", idx+1)
+			if _, err := fmt.Scan(&data[idx].NIDN); err != nil || data[idx].NIDN == "" {
 				fmt.Println("NIDN tidak boleh kosong!")
 				var dummy string
 				fmt.Scanln(&dummy)
 				continue
 			}
 			isAngka := true
-			for _, c := range data[i].NIDN {
+			for _, c := range data[idx].NIDN {
 				if c < '0' || c > '9' {
 					isAngka = false
 					break
@@ -293,32 +294,35 @@ func inputDataDosen(data *Dosen, n *int) {
 			break
 		}
 	}
+	*n += tambah
 }
 
 func inputDataKelas(data *Kelas, n *int) {
-	fmt.Print("Masukkan jumlah kelas: ")
+	var tambah int
+	fmt.Print("Masukkan jumlah kelas yang ingin ditambah: ")
 	for {
-		if _, err := fmt.Scan(n); err != nil || *n <= 0 || *n > 100 {
-			fmt.Println("Input jumlah kelas harus berupa angka 1-100!")
-			fmt.Print("Masukkan jumlah kelas: ")
+		if _, err := fmt.Scan(&tambah); err != nil || tambah <= 0 || *n+tambah > 100 {
+			fmt.Println("Input jumlah kelas harus berupa angka dan total tidak boleh lebih dari 100!")
+			fmt.Print("Masukkan jumlah kelas yang ingin ditambah: ")
 			var dummy string
 			fmt.Scanln(&dummy)
 			continue
 		}
 		break
 	}
-	for i := 0; i < *n; i++ {
+	for i := 0; i < tambah; i++ {
+		idx := *n + i
 		// Validasi NamaKelas: tidak boleh kosong & tidak boleh angka
 		for {
-			fmt.Printf("Nama kelas ke-%d: ", i+1)
-			if _, err := fmt.Scan(&data[i].NamaKelas); err != nil || data[i].NamaKelas == "" {
+			fmt.Printf("Nama kelas ke-%d: ", idx+1)
+			if _, err := fmt.Scan(&data[idx].NamaKelas); err != nil || data[idx].NamaKelas == "" {
 				fmt.Println("Nama kelas tidak boleh kosong!")
 				var dummy string
 				fmt.Scanln(&dummy)
 				continue
 			}
 			isAngka := true
-			for _, c := range data[i].NamaKelas {
+			for _, c := range data[idx].NamaKelas {
 				if c < '0' || c > '9' {
 					isAngka = false
 					break
@@ -332,8 +336,8 @@ func inputDataKelas(data *Kelas, n *int) {
 		}
 		// Validasi Ruangan: tidak boleh kosong
 		for {
-			fmt.Printf("Ruangan kelas ke-%d: ", i+1)
-			if _, err := fmt.Scan(&data[i].Ruangan); err != nil || data[i].Ruangan == "" {
+			fmt.Printf("Ruangan kelas ke-%d: ", idx+1)
+			if _, err := fmt.Scan(&data[idx].Ruangan); err != nil || data[idx].Ruangan == "" {
 				fmt.Println("Ruangan tidak boleh kosong!")
 				var dummy string
 				fmt.Scanln(&dummy)
@@ -342,6 +346,7 @@ func inputDataKelas(data *Kelas, n *int) {
 			break
 		}
 	}
+	*n += tambah
 }
 
 // --- Fungsi Tampilkan Data ---
@@ -513,12 +518,12 @@ func main() {
 		fmt.Println("0. Keluar")
 		fmt.Print("Pilih menu: ")
 		if _, err := fmt.Scan(&pilih); err != nil {
-            fmt.Println("Input harus berupa angka!")
-            var dummy string
-            fmt.Scanln(&dummy) // bersihkan buffer
-            fmt.Println()
-            continue
-        }
+			fmt.Println("Input harus berupa angka!")
+			var dummy string
+			fmt.Scanln(&dummy) // bersihkan buffer
+			fmt.Println()
+			continue
+		}
 		if pilih == 0 {
 			break
 		}
@@ -533,12 +538,12 @@ func main() {
 			fmt.Println("Sort untuk: 1. Mahasiswa 2. Dosen 3. Kelas")
 			fmt.Print("Pilih: ")
 			if _, err := fmt.Scan(&subpilih); err != nil {
-                fmt.Println("Input harus berupa angka!")
-                var dummy string
-                fmt.Scanln(&dummy)
-                fmt.Println()
-                continue
-            }
+				fmt.Println("Input harus berupa angka!")
+				var dummy string
+				fmt.Scanln(&dummy)
+				fmt.Println()
+				continue
+			}
 			if subpilih == 1 {
 				menuSortMahasiswa(&mahasiswa, nMahasiswa)
 			} else if subpilih == 2 {
@@ -553,12 +558,12 @@ func main() {
 			fmt.Println("Search untuk: 1. Mahasiswa 2. Dosen 3. Kelas")
 			fmt.Print("Pilih: ")
 			if _, err := fmt.Scan(&subpilih); err != nil {
-                fmt.Println("Input harus berupa angka!")
-                var dummy string
-                fmt.Scanln(&dummy)
-                fmt.Println()
-                continue
-            }
+				fmt.Println("Input harus berupa angka!")
+				var dummy string
+				fmt.Scanln(&dummy)
+				fmt.Println()
+				continue
+			}
 			if subpilih == 1 {
 				menuSearchMahasiswa(&mahasiswa, nMahasiswa)
 			} else if subpilih == 2 {
@@ -573,12 +578,12 @@ func main() {
 			fmt.Println("Tampilkan data: 1. Mahasiswa 2. Dosen 3. Kelas")
 			fmt.Print("Pilih: ")
 			if _, err := fmt.Scan(&subpilih); err != nil {
-                fmt.Println("Input harus berupa angka!")
-                var dummy string
-                fmt.Scanln(&dummy)
-                fmt.Println()
-                continue
-            }
+				fmt.Println("Input harus berupa angka!")
+				var dummy string
+				fmt.Scanln(&dummy)
+				fmt.Println()
+				continue
+			}
 			if subpilih == 1 {
 				tampilkanDataMahasiswa(&mahasiswa, nMahasiswa)
 			} else if subpilih == 2 {
