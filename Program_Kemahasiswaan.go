@@ -545,6 +545,9 @@ func main() {
 				menuSortDosen(&dosen, nDosen)
 			} else if subpilih == 3 {
 				menuSortKelas(&kelas, nKelas)
+			} else {
+				fmt.Println("Pilihan tidak valid!")
+				continue
 			}
 		case 5:
 			fmt.Println("Search untuk: 1. Mahasiswa 2. Dosen 3. Kelas")
@@ -562,8 +565,10 @@ func main() {
 				menuSearchDosen(&dosen, nDosen)
 			} else if subpilih == 3 {
 				menuSearchKelas(&kelas, nKelas)
+			} else {
+				fmt.Println("Pilihan tidak valid!")
+				continue
 			}
-
 		case 6:
 			fmt.Println("Tampilkan data: 1. Mahasiswa 2. Dosen 3. Kelas")
 			fmt.Print("Pilih: ")
@@ -580,9 +585,13 @@ func main() {
 				tampilkanDataDosen(&dosen, nDosen)
 			} else if subpilih == 3 {
 				tampilkanDataKelas(&kelas, nKelas)
+			} else {
+				fmt.Println("Pilihan tidak valid!")
+				continue
 			}
 		default:
 			fmt.Println("Pilihan menu tidak valid!")
+			continue
 		}
 		fmt.Println()
 	}
