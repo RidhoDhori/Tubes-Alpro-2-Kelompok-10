@@ -48,30 +48,44 @@ func insertionSortingMahasiswa(data *Mahasiswa, n int) {
 		data[j+1] = key
 	}
 }
-func linearSearchMahasiswa(data *Mahasiswa, n int, target string) int {
-	for i := 0; i < n; i++ {
-		if data[i].Nama == target {
-			return i
-		}
-	}
-	return -1
+func linearSearchMahasiswa(data *Mahasiswa, n int, prefix string) []int {
+    var hasil []int
+    for i := 0; i < n; i++ {
+        if len(data[i].Nama) >= len(prefix) && data[i].Nama[:len(prefix)] == prefix {
+            hasil = append(hasil, i)
+        }
+    }
+    return hasil
 }
-func binarySearchMahasiswa(data *Mahasiswa, n int, target string) int {
-	temp := make([]DataMahasiswa, n)
-	copy(temp, data[:n])
-	sort.Slice(temp, func(i, j int) bool { return temp[i].Nama < temp[j].Nama })
-	bawah, atas := 0, n-1
-	for bawah <= atas {
-		tengah := (bawah + atas) / 2
-		if temp[tengah].Nama == target {
-			return tengah
-		} else if temp[tengah].Nama < target {
-			bawah = tengah + 1
-		} else {
-			atas = tengah - 1
-		}
-	}
-	return -1
+func binarySearchPrefixMahasiswa(data *Mahasiswa, n int, prefix string) []int {
+    temp := make([]DataMahasiswa, n)
+    copy(temp, data[:n])
+    sort.Slice(temp, func(i, j int) bool { return temp[i].Nama < temp[j].Nama })
+    bawah, atas := 0, n-1
+    var hasil []int
+    for bawah <= atas {
+        tengah := (bawah + atas) / 2
+        if len(temp[tengah].Nama) >= len(prefix) && temp[tengah].Nama[:len(prefix)] == prefix {
+            // Cari ke kiri
+            i := tengah
+            for i >= 0 && len(temp[i].Nama) >= len(prefix) && temp[i].Nama[:len(prefix)] == prefix {
+                hasil = append(hasil, i)
+                i--
+            }
+            // Cari ke kanan
+            i = tengah + 1
+            for i < n && len(temp[i].Nama) >= len(prefix) && temp[i].Nama[:len(prefix)] == prefix {
+                hasil = append(hasil, i)
+                i++
+            }
+            break
+        } else if temp[tengah].Nama < prefix {
+            bawah = tengah + 1
+        } else {
+            atas = tengah - 1
+        }
+    }
+    return hasil
 }
 
 // Dosen
@@ -97,30 +111,44 @@ func insertionSortingDosen(data *Dosen, n int) {
 		data[j+1] = key
 	}
 }
-func linearSearchDosen(data *Dosen, n int, target string) int {
-	for i := 0; i < n; i++ {
-		if data[i].Nama == target {
-			return i
-		}
-	}
-	return -1
+func linearSearchDosen(data *Dosen, n int, prefix string) []int {
+    var hasil []int
+    for i := 0; i < n; i++ {
+        if len(data[i].Nama) >= len(prefix) && data[i].Nama[:len(prefix)] == prefix {
+            hasil = append(hasil, i)
+        }
+    }
+    return hasil
 }
-func binarySearchDosen(data *Dosen, n int, target string) int {
-	temp := make([]DataDosen, n)
-	copy(temp, data[:n])
-	sort.Slice(temp, func(i, j int) bool { return temp[i].Nama < temp[j].Nama })
-	bawah, atas := 0, n-1
-	for bawah <= atas {
-		tengah := (bawah + atas) / 2
-		if temp[tengah].Nama == target {
-			return tengah
-		} else if temp[tengah].Nama < target {
-			bawah = tengah + 1
-		} else {
-			atas = tengah - 1
-		}
-	}
-	return -1
+func binarySearchDosen(data *Dosen, n int, prefix string) []int {
+    temp := make([]DataDosen, n)
+    copy(temp, data[:n])
+    sort.Slice(temp, func(i, j int) bool { return temp[i].Nama < temp[j].Nama })
+    bawah, atas := 0, n-1
+    var hasil []int
+    for bawah <= atas {
+        tengah := (bawah + atas) / 2
+        if len(temp[tengah].Nama) >= len(prefix) && temp[tengah].Nama[:len(prefix)] == prefix {
+            // Kiri
+            i := tengah
+            for i >= 0 && len(temp[i].Nama) >= len(prefix) && temp[i].Nama[:len(prefix)] == prefix {
+                hasil = append(hasil, i)
+                i--
+            }
+            // Kanan
+            i = tengah + 1
+            for i < n && len(temp[i].Nama) >= len(prefix) && temp[i].Nama[:len(prefix)] == prefix {
+                hasil = append(hasil, i)
+                i++
+            }
+            break
+        } else if temp[tengah].Nama < prefix {
+            bawah = tengah + 1
+        } else {
+            atas = tengah - 1
+        }
+    }
+    return hasil
 }
 
 // Kelas
@@ -146,30 +174,44 @@ func insertionSortingKelas(data *Kelas, n int) {
 		data[j+1] = key
 	}
 }
-func linearSearchKelas(data *Kelas, n int, target string) int {
-	for i := 0; i < n; i++ {
-		if data[i].NamaKelas == target {
-			return i
-		}
-	}
-	return -1
+func linearSearchKelas(data *Kelas, n int, prefix string) []int {
+    var hasil []int
+    for i := 0; i < n; i++ {
+        if len(data[i].NamaKelas) >= len(prefix) && data[i].NamaKelas[:len(prefix)] == prefix {
+            hasil = append(hasil, i)
+        }
+    }
+    return hasil
 }
-func binarySearchKelas(data *Kelas, n int, target string) int {
-	temp := make([]DataKelas, n)
-	copy(temp, data[:n])
-	sort.Slice(temp, func(i, j int) bool { return temp[i].NamaKelas < temp[j].NamaKelas })
-	bawah, atas := 0, n-1
-	for bawah <= atas {
-		tengah := (bawah + atas) / 2
-		if temp[tengah].NamaKelas == target {
-			return tengah
-		} else if temp[tengah].NamaKelas < target {
-			bawah = tengah + 1
-		} else {
-			atas = tengah - 1
-		}
-	}
-	return -1
+func binarySearchKelas(data *Kelas, n int, prefix string) []int {
+    temp := make([]DataKelas, n)
+    copy(temp, data[:n])
+    sort.Slice(temp, func(i, j int) bool { return temp[i].NamaKelas < temp[j].NamaKelas })
+    bawah, atas := 0, n-1
+    var hasil []int
+    for bawah <= atas {
+        tengah := (bawah + atas) / 2
+        if len(temp[tengah].NamaKelas) >= len(prefix) && temp[tengah].NamaKelas[:len(prefix)] == prefix {
+            // Kiri
+            i := tengah
+            for i >= 0 && len(temp[i].NamaKelas) >= len(prefix) && temp[i].NamaKelas[:len(prefix)] == prefix {
+                hasil = append(hasil, i)
+                i--
+            }
+            // Kanan
+            i = tengah + 1
+            for i < n && len(temp[i].NamaKelas) >= len(prefix) && temp[i].NamaKelas[:len(prefix)] == prefix {
+                hasil = append(hasil, i)
+                i++
+            }
+            break
+        } else if temp[tengah].NamaKelas < prefix {
+            bawah = tengah + 1
+        } else {
+            atas = tengah - 1
+        }
+    }
+    return hasil
 }
 
 // --- Fungsi Input Data ---
@@ -401,6 +443,9 @@ func menuSortMahasiswa(data *Mahasiswa, n int) {
 		for i := 0; i < n; i++ {
 			fmt.Println(data[i].Nama, data[i].NIM)
 		}
+	} else {
+		fmt.Println("Pilihan tidak valid!")
+		return
 	}
 }
 func menuSortDosen(data *Dosen, n int) {
@@ -419,6 +464,9 @@ func menuSortDosen(data *Dosen, n int) {
 		for i := 0; i < n; i++ {
 			fmt.Println(data[i].Nama, data[i].NIDN)
 		}
+	} else {
+		fmt.Println("Pilihan tidak valid!")
+		return
 	}
 }
 func menuSortKelas(data *Kelas, n int) {
@@ -437,67 +485,85 @@ func menuSortKelas(data *Kelas, n int) {
 		for i := 0; i < n; i++ {
 			fmt.Println(data[i].NamaKelas, data[i].Ruangan)
 		}
+	} else {
+		fmt.Println("Pilihan tidak valid!")
+		return
 	}
 }
 func menuSearchMahasiswa(data *Mahasiswa, n int) {
-	var pilih int
-	var target string
-	fmt.Print("1. Linear Search Mahasiswa\n2. Binary Search Mahasiswa\nPilih: ")
-	fmt.Scan(&pilih)
-	fmt.Print("Masukkan nama yang dicari: ")
-	fmt.Scan(&target)
-	var index int
-	if pilih == 1 {
-		index = linearSearchMahasiswa(data, n, target)
+    var pilih int
+    var target string
+    fmt.Print("1. Linear Search Mahasiswa\n2. Binary Search Mahasiswa\nPilih: ")
+    fmt.Scan(&pilih)
+    var hasil []int
+    if pilih == 1 {
+	hasil = linearSearchMahasiswa(data, n, target)
 	} else if pilih == 2 {
-		index = binarySearchMahasiswa(data, n, target)
-	}
-	if index != -1 {
-		fmt.Println("Ditemukan pada indeks:", index)
-		fmt.Println(data[index].Nama, data[index].NIM)
+		hasil = binarySearchPrefixMahasiswa(data, n, target)
 	} else {
-		fmt.Println("Tidak ditemukan")
+		fmt.Println("Pilihan tidak valid!")
+		return
 	}
+	fmt.Print("Masukkan nama / awalan yang dicari: ")
+	fmt.Scan(&target)
+    if len(hasil) > 0 {
+        fmt.Println("Ditemukan pada indeks:")
+        for _, idx := range hasil {
+            fmt.Printf("%d. %s %s\n", idx+1, data[idx].Nama, data[idx].NIM)
+        }
+    } else {
+        fmt.Println("Tidak ditemukan")
+    }
 }
 func menuSearchDosen(data *Dosen, n int) {
-	var pilih int
-	var target string
-	fmt.Print("1. Linear Search Dosen\n2. Binary Search Dosen\nPilih: ")
-	fmt.Scan(&pilih)
-	fmt.Print("Masukkan nama yang dicari: ")
-	fmt.Scan(&target)
-	var index int
-	if pilih == 1 {
-		index = linearSearchDosen(data, n, target)
-	} else if pilih == 2 {
-		index = binarySearchDosen(data, n, target)
+    var pilih int
+    var target string
+    fmt.Print("1. Linear Search Dosen \n2. Binary Search Dosen \nPilih: ")
+    fmt.Scan(&pilih)
+    var hasil []int
+    if pilih == 1 {
+        hasil = linearSearchDosen(data, n, target)
+    } else if pilih == 2 {
+        hasil = binarySearchDosen(data, n, target)
+    } else {
+		fmt.Println("Pilihan tidak valid!")
+		return
 	}
-	if index != -1 {
-		fmt.Println("Ditemukan pada indeks:", index)
-		fmt.Println(data[index].Nama, data[index].NIDN)
-	} else {
-		fmt.Println("Tidak ditemukan")
-	}
+	fmt.Print("Masukkan nama / awalan yang dicari: ")
+    fmt.Scan(&target)
+    if len(hasil) > 0 {
+        fmt.Println("Ditemukan pada indeks:")
+        for _, idx := range hasil {
+            fmt.Printf("%d. %s %s\n", idx+1, data[idx].Nama, data[idx].NIDN)
+        }
+    } else {
+        fmt.Println("Tidak ditemukan")
+    }
 }
 func menuSearchKelas(data *Kelas, n int) {
-	var pilih int
-	var target string
-	fmt.Print("1. Linear Search Kelas\n2. Binary Search Kelas\nPilih: ")
-	fmt.Scan(&pilih)
-	fmt.Print("Masukkan nama kelas yang dicari: ")
-	fmt.Scan(&target)
-	var index int
-	if pilih == 1 {
-		index = linearSearchKelas(data, n, target)
-	} else if pilih == 2 {
-		index = binarySearchKelas(data, n, target)
+    var pilih int
+    var target string
+    fmt.Print("1. Linear Search Kelas \n2. Binary Search Kelas \nPilih: ")
+    fmt.Scan(&pilih) 
+    var hasil []int
+    if pilih == 1 {
+        hasil = linearSearchKelas(data, n, target)
+    } else if pilih == 2 {
+        hasil = binarySearchKelas(data, n, target)
+    } else {
+		fmt.Println("Pilihan tidak valid!")
+		return
 	}
-	if index != -1 {
-		fmt.Println("Ditemukan pada indeks:", index)
-		fmt.Println(data[index].NamaKelas, data[index].Ruangan)
-	} else {
-		fmt.Println("Tidak ditemukan")
-	}
+	fmt.Print("Masukkan nama kelas / awalan yang dicari: ")
+    fmt.Scan(&target)
+    if len(hasil) > 0 {
+        fmt.Println("Ditemukan pada indeks:")
+        for _, idx := range hasil {
+            fmt.Printf("%d. %s %s\n", idx+1, data[idx].NamaKelas, data[idx].Ruangan)
+        }
+    } else {
+        fmt.Println("Tidak ditemukan")
+    }
 }
 
 // --- Main Program ---
