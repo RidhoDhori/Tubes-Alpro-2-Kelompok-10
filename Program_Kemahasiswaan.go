@@ -70,8 +70,9 @@ func binarySearchPrefixMahasiswa(data *[100]DataMahasiswa, n int, prefix string)
     sort.Slice(temp, func(i, j int) bool { return temp[i].Nama < temp[j].Nama })
     bawah, atas := 0, n-1
     var hasil []int
+    found := false
 
-    for bawah <= atas {
+    for !found && bawah <= atas {
         tengah := (bawah + atas) / 2
         if len(temp[tengah].Nama) >= len(prefix) && temp[tengah].Nama[:len(prefix)] == prefix {
             i := tengah
@@ -86,7 +87,7 @@ func binarySearchPrefixMahasiswa(data *[100]DataMahasiswa, n int, prefix string)
                 hasil = append(hasil, i)
                 i++
             }
-            break
+            found = true
 
         } else if temp[tengah].Nama < prefix {
             bawah = tengah + 1
@@ -143,8 +144,9 @@ func binarySearchDosen(data *[100]DataDosen, n int, prefix string) []int {
     sort.Slice(temp, func(i, j int) bool { return temp[i].Nama < temp[j].Nama })
     bawah, atas := 0, n-1
     var hasil []int
+    found := false
 
-    for bawah <= atas {
+    for !found && bawah <= atas {
         tengah := (bawah + atas) / 2
         if len(temp[tengah].Nama) >= len(prefix) && temp[tengah].Nama[:len(prefix)] == prefix {
             i := tengah
@@ -158,7 +160,7 @@ func binarySearchDosen(data *[100]DataDosen, n int, prefix string) []int {
                 hasil = append(hasil, i)
                 i++
             }
-            break
+            found = true
 
         } else if temp[tengah].Nama < prefix {
             bawah = tengah + 1
@@ -215,8 +217,9 @@ func binarySearchKelas(data *[100]DataKelas, n int, prefix string) []int {
     sort.Slice(temp, func(i, j int) bool { return temp[i].NamaKelas < temp[j].NamaKelas })
     bawah, atas := 0, n-1
     var hasil []int
-	
-    for bawah <= atas {
+	found := false
+
+    for !found && bawah <= atas {
         tengah := (bawah + atas) / 2
         if len(temp[tengah].NamaKelas) >= len(prefix) && temp[tengah].NamaKelas[:len(prefix)] == prefix {
             i := tengah
@@ -230,7 +233,7 @@ func binarySearchKelas(data *[100]DataKelas, n int, prefix string) []int {
                 hasil = append(hasil, i)
                 i++
             }
-            break
+            found = true
 
         } else if temp[tengah].NamaKelas < prefix {
             bawah = tengah + 1
@@ -273,7 +276,6 @@ func inputDataMahasiswa(data *[100]DataMahasiswa, n *int) {
                 for _, c := range data[i].Nama {
                     if c < '0' || c > '9' {
                         isAngka = false
-                        break
                     }
                 }
                 if isAngka {
@@ -296,7 +298,6 @@ func inputDataMahasiswa(data *[100]DataMahasiswa, n *int) {
                 for _, c := range data[i].NIM {
                     if c < '0' || c > '9' {
                         isAngka = false
-                        break
                     }
                 }
                 if !isAngka {
@@ -342,7 +343,6 @@ func inputDataDosen(data *[100]DataDosen, n *int) {
                 for _, c := range data[idx].Nama {
                     if c < '0' || c > '9' {
                         isAngka = false
-                        break
                     }
                 }
                 if isAngka {
@@ -365,7 +365,6 @@ func inputDataDosen(data *[100]DataDosen, n *int) {
                 for _, c := range data[idx].NIDN {
                     if c < '0' || c > '9' {
                         isAngka = false
-                        break
                     }
                 }
                 if !isAngka {
@@ -411,7 +410,6 @@ func inputDataKelas(data *[100]DataKelas, n *int) {
                 for _, c := range data[idx].NamaKelas {
                     if c < '0' || c > '9' {
                         isAngka = false
-                        break
                     }
                 }
                 if isAngka {
@@ -480,7 +478,6 @@ func menuSortMahasiswa(data *[100]DataMahasiswa, n int) {
     fmt.Print("Urutan: 1. Ascending 2. Descending\nPilih: ")
     fmt.Scan(&urut)
     ascending := urut == 1
-
     if pilih == 1 {
         selectionSortingMahasiswa(data, n, ascending)
         fmt.Println("Setelah selection sort:")
@@ -497,6 +494,7 @@ func menuSortMahasiswa(data *[100]DataMahasiswa, n int) {
         fmt.Println("Pilihan tidak valid!")
         return
     }
+
 }
 
 func menuSortDosen(data *[100]DataDosen, n int) {
@@ -639,7 +637,6 @@ func menuSearchKelas(data *[100]DataKelas, n int) {
     }
 }
 
-// --- Fungsi Edit Data ---
 func editDataMahasiswa(data *[100]DataMahasiswa, n int) {
     if n == 0 {
         fmt.Println("Belum ada data mahasiswa.")
@@ -703,7 +700,6 @@ func editDataKelas(data *[100]DataKelas, n int) {
     fmt.Println("Data berhasil diubah.")
 }
 
-// --- Fungsi Hapus Data ---
 func hapusDataMahasiswa(data *[100]DataMahasiswa, n *int) {
     if *n == 0 {
         fmt.Println("Belum ada data mahasiswa.")
