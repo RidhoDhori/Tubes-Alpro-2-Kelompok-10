@@ -145,7 +145,6 @@ func binarySearchDosen(data *[100]DataDosen, n int, prefix string) []int {
     bawah, atas := 0, n-1
     var hasil []int
     found := false
-
     for !found && bawah <= atas {
         tengah := (bawah + atas) / 2
         if len(temp[tengah].Nama) >= len(prefix) && temp[tengah].Nama[:len(prefix)] == prefix {
@@ -217,7 +216,7 @@ func binarySearchKelas(data *[100]DataKelas, n int, prefix string) []int {
     sort.Slice(temp, func(i, j int) bool { return temp[i].NamaKelas < temp[j].NamaKelas })
     bawah, atas := 0, n-1
     var hasil []int
-	found := false
+    found := false
 
     for !found && bawah <= atas {
         tengah := (bawah + atas) / 2
@@ -556,6 +555,12 @@ func menuSearchMahasiswa(data *[100]DataMahasiswa, n int) {
     var target string
     fmt.Print("1. Linear Search Mahasiswa\n2. Binary Search Mahasiswa\nPilih: ")
     fmt.Scan(&pilih)
+    if pilih != 1 && pilih != 2 {
+        fmt.Println("Pilihan tidak valid!")
+        return
+    }
+    fmt.Print("Masukkan nama / awalan yang dicari: ")
+    fmt.Scan(&target)
     var hasil []int
 
     if pilih == 1 {
@@ -567,11 +572,9 @@ func menuSearchMahasiswa(data *[100]DataMahasiswa, n int) {
 		return
 	}
 
-	fmt.Print("Masukkan nama / awalan yang dicari: ")
-	fmt.Scan(&target)
 
     if len(hasil) > 0 {
-        fmt.Println("Ditemukan pada indeks:")
+        fmt.Println("Ditemukan pada nomor:")
         for _, idx := range hasil {
             fmt.Printf("%d. %s %s\n", idx+1, data[idx].Nama, data[idx].NIM)
         }
@@ -584,6 +587,12 @@ func menuSearchDosen(data *[100]DataDosen, n int) {
     var target string
     fmt.Print("1. Linear Search Dosen \n2. Binary Search Dosen \nPilih: ")
     fmt.Scan(&pilih)
+    if pilih != 1 && pilih != 2 {
+        fmt.Println("Pilihan tidak valid!")
+        return
+    }
+    fmt.Print("Masukkan nama / awalan yang dicari: ")
+    fmt.Scan(&target)
     var hasil []int
 
     if pilih == 1 {
@@ -595,11 +604,8 @@ func menuSearchDosen(data *[100]DataDosen, n int) {
 		return
 	}
 
-	fmt.Print("Masukkan nama / awalan yang dicari: ")
-    fmt.Scan(&target)
-
     if len(hasil) > 0 {
-        fmt.Println("Ditemukan pada indeks:")
+        fmt.Println("Ditemukan pada nomor:")
         for _, idx := range hasil {
             fmt.Printf("%d. %s %s\n", idx+1, data[idx].Nama, data[idx].NIDN)
         }
@@ -613,6 +619,12 @@ func menuSearchKelas(data *[100]DataKelas, n int) {
     var target string
     fmt.Print("1. Linear Search Kelas \n2. Binary Search Kelas \nPilih: ")
     fmt.Scan(&pilih) 
+    if pilih != 1 && pilih != 2 {
+        fmt.Println("Pilihan tidak valid!")
+        return
+    }
+    fmt.Print("Masukkan nama kelas / awalan yang dicari: ")
+    fmt.Scan(&target)
     var hasil []int
 
     if pilih == 1 {
@@ -624,11 +636,8 @@ func menuSearchKelas(data *[100]DataKelas, n int) {
 		return
 	}
 
-	fmt.Print("Masukkan nama kelas / awalan yang dicari: ")
-    fmt.Scan(&target)
-
     if len(hasil) > 0 {
-        fmt.Println("Ditemukan pada indeks:")
+        fmt.Println("Ditemukan pada nomor:")
         for _, idx := range hasil {
             fmt.Printf("%d. %s %s\n", idx+1, data[idx].NamaKelas, data[idx].Ruangan)
         }
